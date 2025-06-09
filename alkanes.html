@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide to Alkanes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Style for the mechanism tab viewer */
+        .mechanism-step {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .mechanism-step.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Style for the FAQ accordion */
+        .faq-answer {
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .faq-answer.open {
+            max-height: 500px; /* Large enough to show content */
+            opacity: 1;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .faq-question {
+            cursor: pointer;
+        }
+        .faq-question .icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-question.open .icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-gray-800 text-white p-6 sticky top-0 h-screen overflow-y-auto">
+            <h1 class="text-2xl font-bold mb-6 text-indigo-400">Alkanes Guide</h1>
+            <nav id="sidebar-nav">
+                <ul class="space-y-2">
+                    <li><a href="#introduction" class="nav-link block py-2 px-4 rounded-lg">Introduction</a></li>
+                    <li><a href="#isomerism" class="nav-link block py-2 px-4 rounded-lg">Isomerism</a></li>
+                    <li><a href="#properties" class="nav-link block py-2 px-4 rounded-lg">Physical Properties</a></li>
+                    <li><a href="#reactions" class="nav-link block py-2 px-4 rounded-lg">Reactions</a></li>
+                    <li><a href="#mechanism" class="nav-link block py-2 px-4 rounded-lg">FRS Mechanism</a></li>
+                    <li><a href="#environmental" class="nav-link block py-2 px-4 rounded-lg">Environmental Impact</a></li>
+                    <li><a href="#faq" class="nav-link block py-2 px-4 rounded-lg">FAQs & Key Concepts</a></li>
+                    <li><a href="#quiz" class="nav-link block py-2 px-4 rounded-lg">Quiz</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10">
+            <!-- Introduction Section -->
+            <section id="introduction" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">1. Introduction to Alkanes</h2>
+                <div class="card p-6">
+                    <p class="mb-4">Alkanes are the simplest family of organic compounds, known as <strong class="text-indigo-600">saturated hydrocarbons</strong>. This means they consist only of carbon (C) and hydrogen (H) atoms and contain only single covalent bonds.</p>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg mb-2"><i class="fas fa-sitemap mr-2"></i>Key Characteristics:</h3>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>General Formula:</strong> C<sub>n</sub>H<sub>2n+2</sub> (for non-cyclic alkanes). For cycloalkanes, it's C<sub>n</sub>H<sub>2n</sub>.</li>
+                            <li><strong>Bonding:</strong> All carbon atoms are sp<sup>3</sup> hybridized, resulting in a tetrahedral geometry with bond angles of 109.5°.</li>
+                            <li><strong>Reactivity:</strong> Generally unreactive due to the strength and non-polar nature of their C-C and C-H bonds.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="font-semibold text-lg mb-2"><i class="fas fa-pen-nib mr-2"></i>Nomenclature (IUPAC Naming)</h3>
+                        <p class="mb-2">Naming alkanes follows a systematic set of rules:</p>
+                        <ol class="list-decimal list-inside space-y-2 pl-4">
+                            <li><strong>Find the Parent Chain:</strong> Identify the longest continuous chain of carbon atoms.</li>
+                            <li><strong>Number the Chain:</strong> Start numbering from the end that gives the substituents (branches) the lowest possible numbers.</li>
+                            <li><strong>Name the Substituents:</strong> Name the alkyl groups attached to the parent chain (e.g., -CH<sub>3</sub> is methyl, -CH<sub>2</sub>CH<sub>3</sub> is ethyl).</li>
+                            <li><strong>Assemble the Name:</strong> List substituents alphabetically, preceded by their position number. Use prefixes (di-, tri-, tetra-) for multiple identical substituents.</li>
+                        </ol>
+                        <div class="mt-4 p-4 border-l-4 border-indigo-500 bg-gray-50">
+                            <strong>Example:</strong> Name the following compound:
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLDqDzQ7KTYtkm1g_AOPVGRVVR9zj2G2Y07Q&s" alt="2,2,4-trimethylpentane structure" class="my-2 rounded-lg bg-white p-2 max-w-sm mx-auto">
+                            <p><strong>Answer:</strong> 2,2,4-trimethylpentane</p>
+                            <p><strong>Explanation:</strong> The longest chain is 5 carbons (pentane). Numbering from the right gives the methyl groups the lowest numbers (2, 2, and 4). Since there are three methyl groups, we use "trimethyl".</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Isomerism Section -->
+            <section id="isomerism" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">2. Isomerism in Alkanes</h2>
+                <div class="card p-6">
+                    <p class="mb-4">Isomers are compounds with the same molecular formula but different structural arrangements. Alkanes with four or more carbons exhibit <strong class="text-indigo-600">constitutional (or structural) isomerism</strong>.</p>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg mb-2">Constitutional Isomers</h3>
+                        <p>These isomers have the same molecular formula but different connectivity of atoms (different structural formulae). This leads to different physical properties.</p>
+                        <p class="mt-2"><strong>Example: C<sub>4</sub>H<sub>10</sub></strong></p>
+                        <div class="flex flex-wrap justify-around mt-2">
+                             <div class="text-center p-2">
+                                <p><strong>Butane</strong></p>
+                                <p class="font-mono">CH₃-CH₂-CH₂-CH₃</p>
+                                <p class="text-sm">(b.p. -0.5 °C)</p>
+                            </div>
+                            <div class="text-center p-2">
+                                <p><strong>2-methylpropane</strong> (isobutane)</p>
+                                <p class="font-mono">CH₃-CH(CH₃)-CH₃</p>
+                                <p class="text-sm">(b.p. -11.7 °C)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-600">Note: As the number of carbons increases, the number of possible isomers grows rapidly. Pentane (C₅H₁₂) has 3 isomers, while decane (C₁₀H₂₂) has 75!</p>
+                </div>
+            </section>
+
+            <!-- Physical Properties Section -->
+            <section id="properties" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">3. Physical Properties</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold mb-2"><i class="fas fa-thermometer-half mr-2 text-indigo-500"></i>Boiling Points</h3>
+                        <p>Boiling points increase with the number of carbon atoms. This is due to stronger <strong class="text-indigo-600">instantaneous dipole-induced dipole (van der Waals) forces</strong> between larger molecules with more electrons.</p>
+                        <p class="mt-2">Branching <strong class="text-red-500">lowers</strong> the boiling point. Branched molecules are more compact, reducing the surface area for intermolecular contact, thus weakening the van der Waals forces.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold mb-2"><i class="fas fa-tint mr-2 text-indigo-500"></i>Solubility</h3>
+                        <p>Alkanes are <strong class="text-indigo-600">non-polar</strong>. Following the "like dissolves like" principle, they are:</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li><strong>Insoluble</strong> in polar solvents like water.</li>
+                            <li><strong>Soluble</strong> in non-polar organic solvents (e.g., hexane, benzene).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reactions Section -->
+            <section id="reactions" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">4. Chemical Reactions</h2>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3">General Unreactivity</h3>
+                    <p class="mb-4">Alkanes are inert to most common reagents like acids, bases, and oxidizing agents. This is because their C-C and C-H sigma bonds are very strong and non-polar, offering no sites for attack by polar reagents.</p>
+                    <p class="mt-2">However, they undergo a few important reactions under specific, energetic conditions.</p>
+                    
+                    <div class="mt-6 space-y-4">
+                        <div class="p-4 bg-indigo-50 rounded-lg">
+                            <h4 class="font-bold text-lg"><i class="fas fa-fire mr-2"></i>Combustion</h4>
+                            <p>This is a highly exothermic reaction, which is why alkanes are excellent fuels.</p>
+                            <p class="mt-2"><strong>Complete Combustion:</strong> Occurs with an excess of oxygen, producing carbon dioxide and water.</p>
+                            <p class="font-mono text-sm mt-1">C<sub>n</sub>H<sub>2n+2</sub> + ( (3n+1)/2 ) O<sub>2</sub> → nCO<sub>2</sub> + (n+1)H<sub>2</sub>O</p>
+                            <p class="mt-2"><strong>Incomplete Combustion:</strong> Occurs in a limited supply of oxygen. It produces toxic carbon monoxide (CO) and/or carbon (soot) along with water.</p>
+                        </div>
+                        <div class="p-4 bg-indigo-50 rounded-lg">
+                            <h4 class="font-bold text-lg"><i class="fas fa-sun mr-2"></i>Free Radical Substitution (Halogenation)</h4>
+                            <p>Alkanes react with halogens (typically Cl<sub>2</sub> or Br<sub>2</sub>) in the presence of <strong class="text-indigo-600">UV light</strong>. This is a chain reaction where hydrogen atoms are successively replaced by halogen atoms. The reaction is hard to control and often yields a mixture of mono- and poly-substituted products.</p>
+                            <p class="mt-2"><strong>General Reaction:</strong> R-H + X<sub>2</sub> --(UV light)--> R-X + H-X</p>
+                        </div>
+                        <div class="p-4 bg-indigo-50 rounded-lg">
+                            <h4 class="font-bold text-lg"><i class="fas fa-industry mr-2"></i>Cracking</h4>
+                            <p>Cracking is the process of breaking down large, less useful alkane molecules into smaller, more valuable ones (like petrol components and alkenes) by heating them to high temperatures.</p>
+                             <p class="mt-2"><strong>Thermal Cracking:</strong> High temperature (450-750°C) and pressure. Produces a high percentage of alkenes, which are feedstocks for polymers.</p>
+                             <p class="font-mono text-sm mt-1">e.g., C<sub>12</sub>H<sub>26</sub> → C<sub>8</sub>H<sub>18</sub> + 2C<sub>2</sub>H<sub>4</sub></p>
+                            <p class="mt-2"><strong>Catalytic Cracking:</strong> Lower temperature (around 600°C) with a catalyst (e.g., zeolites like Al<sub>2</sub>O<sub>3</sub>/SiO<sub>2</sub>). Produces branched alkanes and aromatic hydrocarbons, which are components of high-octane petrol.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Mechanism Section -->
+            <section id="mechanism" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">5. Free Radical Substitution In-Depth</h2>
+                <div class="card p-6">
+                    <p class="mb-4">This reaction proceeds via a chain mechanism involving highly reactive intermediates called <strong class="text-indigo-600">free radicals</strong> (species with an unpaired electron). Let's explore the chlorination of ethane (CH<sub>3</sub>CH<sub>3</sub>).</p>
+                    <div class="flex justify-center space-x-2 mb-4">
+                        <button onclick="showStep(0)" class="mechanism-btn bg-indigo-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-600 transition">Step 1: Initiation</button>
+                        <button onclick="showStep(1)" class="mechanism-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 transition">Step 2: Propagation</button>
+                        <button onclick="showStep(2)" class="mechanism-btn bg-gray-300 text-gray-700 py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 transition">Step 3: Termination</button>
+                    </div>
+                    <div id="mechanism-container" class="bg-gray-50 p-6 rounded-lg min-h-[250px] flex items-center justify-center">
+                        <!-- Step 1: Initiation -->
+                        <div id="step-0" class="mechanism-step active text-center">
+                            <h3 class="text-xl font-semibold mb-2">Step 1: Initiation</h3>
+                            <p>UV light provides the energy to break the Cl-Cl bond via <strong class="text-indigo-600">homolytic fission</strong>, creating two chlorine free radicals.</p>
+                            <div class="font-mono text-lg my-4 p-3 bg-white rounded shadow-inner">Cl-Cl  <span class="text-indigo-500 font-bold">--UV Light--></span> 2 Cl•</div>
+                            <p class="text-sm text-gray-600">Each atom takes one electron from the shared pair.</p>
+                        </div>
+                        <!-- Step 2: Propagation -->
+                        <div id="step-1" class="mechanism-step text-center">
+                            <h3 class="text-xl font-semibold mb-2">Step 2: Propagation</h3>
+                            <p>These are chain-carrying steps. A radical reacts to form a new molecule and another radical.</p>
+                            <div class="font-mono text-lg my-2 p-3 bg-white rounded shadow-inner"> (a) CH<sub>3</sub>CH<sub>3</sub> + Cl• → •CH<sub>2</sub>CH<sub>3</sub> + HCl</div>
+                            <div class="font-mono text-lg my-2 p-3 bg-white rounded shadow-inner"> (b) •CH<sub>2</sub>CH<sub>3</sub> + Cl<sub>2</sub> → CH<sub>3</sub>CH<sub>2</sub>Cl + Cl•</div>
+                            <p class="text-sm text-gray-600">The chlorine radical regenerated in step (b) can start the cycle again.</p>
+                        </div>
+                        <!-- Step 3: Termination -->
+                        <div id="step-2" class="mechanism-step text-center">
+                            <h3 class="text-xl font-semibold mb-2">Step 3: Termination</h3>
+                            <p>The reaction stops when two radicals collide and combine, removing radicals from the system.</p>
+                            <div class="font-mono text-md my-2 p-2 bg-white rounded shadow-inner">Cl• + Cl• → Cl<sub>2</sub></div>
+                            <div class="font-mono text-md my-2 p-2 bg-white rounded shadow-inner">•CH<sub>2</sub>CH<sub>3</sub> + Cl• → CH<sub>3</sub>CH<sub>2</sub>Cl</div>
+                            <div class="font-mono text-md my-2 p-2 bg-white rounded shadow-inner">•CH<sub>2</sub>CH<sub>3</sub> + •CH<sub>2</sub>CH<sub>3</sub> → CH<sub>3</sub>CH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub> (butane byproduct)</div>
+                        </div>
+                    </div>
+                     <div class="mt-6 bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <h4 class="font-bold text-lg"><i class="fas fa-star mr-2"></i>Selectivity in Halogenation: Radical Stability</h4>
+                        <p>Not all hydrogen atoms are equally likely to be substituted. The stability of the intermediate free radical determines the major product.</p>
+                        <p class="mt-2"><strong>Stability Order:</strong> Tertiary (3°) > Secondary (2°) > Primary (1°) > Methyl.</p>
+                        <p class="mt-1">This is because alkyl groups are <strong class="text-indigo-600">electron-donating</strong>, which helps to stabilize the electron-deficient carbon radical.</p>
+                        <p class="mt-2"><strong>Example (Propane):</strong> When propane (CH<sub>3</sub>CH<sub>2</sub>CH<sub>3</sub>) is chlorinated, 2-chloropropane (from a more stable secondary radical) is the major product over 1-chloropropane (from a less stable primary radical), even though there are more primary hydrogens.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Environmental Impact Section -->
+            <section id="environmental" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">6. Environmental Impact & Sources</h2>
+                <div class="card p-6">
+                    <p class="mb-4">The use of alkanes has significant environmental consequences.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                            <h3 class="font-semibold text-lg mb-2"><i class="fas fa-smog mr-2"></i>Air Pollution</h3>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>Carbon Monoxide (CO):</strong> Toxic gas from incomplete combustion.</li>
+                                <li><strong>Oxides of Nitrogen (NO<sub>x</sub>):</strong> From high temperatures in engines, causes smog and acid rain.</li>
+                                <li><strong>Unburnt Hydrocarbons:</strong> Contribute to photochemical smog.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                            <h3 class="font-semibold text-lg mb-2"><i class="fas fa-car-battery mr-2"></i>Catalytic Converters</h3>
+                            <p>Cars use catalytic converters with Pt and Rh catalysts to convert pollutants into harmless gases.</p>
+                             <p class="font-mono text-sm mt-2">2CO + 2NO → 2CO<sub>2</sub> + N<sub>2</sub></p>
+                        </div>
+                    </div>
+                     <div class="mt-6 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <h3 class="font-semibold text-lg mb-2"><i class="fas fa-globe-americas mr-2"></i>Enhanced Greenhouse Effect</h3>
+                        <p><strong>Carbon Dioxide (CO<sub>2</sub>)</strong>, the main product of complete combustion, is a major greenhouse gas. Its accumulation in the atmosphere traps heat, leading to global warming and climate change.</p>
+                    </div>
+                     <div class="mt-6 bg-gray-50 p-4 rounded-lg border-l-4 border-gray-500">
+                        <h3 class="font-semibold text-lg mb-2"><i class="fas fa-oil-can mr-2"></i>Petroleum as a Finite Resource</h3>
+                        <p>Alkanes are primarily obtained from <strong class="text-indigo-600">crude oil</strong> (petroleum) through fractional distillation. As a fossil fuel, petroleum is a finite, non-renewable resource. This highlights the importance of energy conservation and recycling.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- FAQ Section -->
+            <section id="faq" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">7. FAQs & Key Concepts</h2>
+                <div class="card p-6 space-y-4" id="faq-container">
+                    <!-- FAQs will be injected here by JS -->
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section id="quiz" class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-600">8. Knowledge Check</h2>
+                <div class="card p-6">
+                    <div id="quiz-container"></div>
+                    <button onclick="submitQuiz()" class="mt-6 bg-indigo-600 text-white py-2 px-6 rounded-lg hover:bg-indigo-700 transition">Submit Answers</button>
+                    <div id="quiz-results" class="mt-4"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // --- Sidebar Navigation Active State ---
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll("#sidebar-nav a");
+
+        const options = {
+            rootMargin: "-20% 0px -80% 0px",
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        const isActive = link.getAttribute("href").substring(1) === entry.target.id;
+                        link.classList.toggle("active", isActive);
+                        link.classList.toggle("bg-indigo-500", isActive);
+                        link.classList.toggle("bg-gray-800", !isActive);
+                    });
+                }
+            });
+        }, options);
+
+        sections.forEach(section => { observer.observe(section); });
+        
+        // --- Mechanism Steps ---
+        const mechanismSteps = document.querySelectorAll('.mechanism-step');
+        const mechanismBtns = document.querySelectorAll('.mechanism-btn');
+
+        function showStep(stepIndex) {
+            mechanismSteps.forEach((step, index) => { step.classList.toggle('active', index === stepIndex); });
+            mechanismBtns.forEach((btn, index) => {
+                btn.classList.toggle('bg-indigo-500', index === stepIndex);
+                btn.classList.toggle('text-white', index === stepIndex);
+                btn.classList.toggle('bg-gray-300', index !== stepIndex);
+                btn.classList.toggle('text-gray-700', index !== stepIndex);
+            });
+        }
+        
+        // --- FAQ Accordion ---
+        const faqData = [
+            {
+                question: "Why are alkanes generally unreactive?",
+                answer: "Alkanes are unreactive because they only contain C-C and C-H single bonds. These are strong sigma (σ) bonds which require a large amount of energy to break. Furthermore, the electronegativity difference between carbon and hydrogen is very small, making the bonds essentially non-polar. This means there are no electron-deficient sites to attract nucleophiles or electron-rich regions to attract electrophiles."
+            },
+            {
+                question: "Why does free radical substitution require UV light?",
+                answer: "The reaction is initiated by the formation of highly reactive free radicals. UV light provides the necessary energy to break the halogen-halogen bond (e.g., Cl-Cl) through homolytic fission, where each atom gets one electron from the covalent bond. This initiation step would not happen under normal conditions in the dark."
+            },
+            {
+                question: "How can you control the products of halogenation?",
+                answer: "The reaction often produces a mixture of products. To favor the formation of the mono-substituted product (e.g., CH₃Cl from CH₄), a large excess of the alkane should be used. This increases the probability that a halogen radical will collide with an alkane molecule rather than an already substituted molecule. To favor poly-substitution, an excess of the halogen should be used."
+            },
+            {
+                question: "Why is the major product of halogenating propane 2-bromopropane and not 1-bromopropane?",
+                answer: "This is due to the relative stability of the free radical intermediates. The abstraction of a hydrogen from the central carbon of propane forms a secondary (2°) radical, while abstraction from an end carbon forms a primary (1°) radical. Secondary radicals are more stable than primary radicals because the two adjacent alkyl groups help stabilize the electron-deficient carbon. Because the secondary radical is more stable, it forms faster, leading to 2-bromopropane being the major product."
+            }
+        ];
+
+        const faqContainer = document.getElementById('faq-container');
+        faqData.forEach(item => {
+            const faqItem = document.createElement('div');
+            faqItem.className = 'border-b border-gray-200 py-2';
+            faqItem.innerHTML = `
+                <div class="faq-question flex justify-between items-center p-2">
+                    <h4 class="font-semibold">${item.question}</h4>
+                    <i class="fas fa-chevron-down icon"></i>
+                </div>
+                <div class="faq-answer p-2 text-gray-600">
+                    <p>${item.answer}</p>
+                </div>
+            `;
+            faqContainer.appendChild(faqItem);
+        });
+
+        faqContainer.addEventListener('click', (e) => {
+            const question = e.target.closest('.faq-question');
+            if (question) {
+                const answer = question.nextElementSibling;
+                question.classList.toggle('open');
+                answer.classList.toggle('open');
+            }
+        });
+
+        // --- Quiz ---
+        const quizData = [
+            {
+                question: "What is the general formula for a non-cyclic alkane?",
+                options: ["CnH2n", "CnH2n+2", "CnH2n-2", "CnHn"],
+                answer: "CnH2n+2"
+            },
+            {
+                question: "Which of the following radicals is the most stable?",
+                options: ["Primary (1°)", "Secondary (2°)", "Tertiary (3°)", "Methyl"],
+                answer: "Tertiary (3°)"
+            },
+            {
+                question: "The reaction of an alkane with a halogen in the presence of UV light is called:",
+                options: ["Electrophilic Addition", "Nucleophilic Substitution", "Free Radical Substitution", "Elimination"],
+                answer: "Free Radical Substitution"
+            },
+            {
+                question: "To get a high yield of a mono-substituted product during halogenation, you should use...",
+                options: ["Excess halogen", "Excess alkane", "High temperature", "A strong catalyst"],
+                answer: "Excess alkane"
+            },
+             {
+                question: "Which process is used to break down large alkanes into smaller, more useful alkenes and alkanes?",
+                options: ["Combustion", "Polymerization", "Cracking", "Isomerization"],
+                answer: "Cracking"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function buildQuiz() {
+            const output = [];
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const options = [];
+                for (let letter in currentQuestion.options) {
+                    options.push(
+                        `<label class="block mt-2">
+                            <input type="radio" name="question${questionNumber}" value="${currentQuestion.options[letter]}" class="mr-2">
+                            ${currentQuestion.options[letter]}
+                        </label>`
+                    );
+                }
+                output.push(
+                    `<div class="mb-6">
+                        <div class="font-semibold">${questionNumber + 1}. ${currentQuestion.question}</div>
+                        <div class="ml-4">${options.join('')}</div>
+                    </div>`
+                );
+            });
+            quizContainer.innerHTML = output.join('');
+        }
+
+        function submitQuiz() {
+            const answerContainers = quizContainer.querySelectorAll('.mb-6');
+            let numCorrect = 0;
+            const resultsContainer = document.getElementById('quiz-results');
+
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const answerContainer = answerContainers[questionNumber];
+                const selector = `input[name=question${questionNumber}]:checked`;
+                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+                if (userAnswer === currentQuestion.answer) {
+                    numCorrect++;
+                    answerContainers[questionNumber].style.color = '#10B981'; // Green
+                } else {
+                    answerContainers[questionNumber].style.color = '#EF4444'; // Red
+                }
+            });
+
+            resultsContainer.innerHTML = `<p class="text-xl font-bold">You got ${numCorrect} out of ${quizData.length} correct!</p>`;
+        }
+        
+        buildQuiz();
+
+    </script>
+</body>
+</html>
